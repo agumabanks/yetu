@@ -286,7 +286,13 @@ class RouteHelper {
   static String getTaxiCouponScreen() => taxiCouponScreen;
 
   static List<GetPage> routes = [
-    GetPage(name: initial, page: () => getRoute(DashboardScreen(pageIndex: 0, fromSplash: Get.parameters['from-splash'] == 'true'))),
+    GetPage(name: initial, page: () => getRoute(
+              DashboardScreen(
+                pageIndex: 0, 
+                fromSplash: Get.parameters['from-splash'] == 'true'
+                )
+              )
+            ),
     GetPage(name: splash, page: () {
       NotificationBody? data;
       if(Get.parameters['data'] != 'null') {

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:sixam_mart/controller/auth_controller.dart';
 import 'package:sixam_mart/controller/banner_controller.dart';
 import 'package:sixam_mart/controller/campaign_controller.dart';
@@ -10,31 +12,37 @@ import 'package:sixam_mart/controller/store_controller.dart';
 import 'package:sixam_mart/controller/splash_controller.dart';
 import 'package:sixam_mart/controller/user_controller.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
-import 'package:sixam_mart/helper/route_helper.dart';
-import 'package:sixam_mart/util/dimensions.dart';
-import 'package:sixam_mart/util/images.dart';
-import 'package:sixam_mart/util/styles.dart';
-import 'package:sixam_mart/view/base/item_view.dart';
 import 'package:sixam_mart/view/base/menu_drawer.dart';
-import 'package:sixam_mart/view/base/paginated_list_view.dart';
 import 'package:sixam_mart/view/base/web_menu_bar.dart';
-import 'package:sixam_mart/view/screens/home/theme1/theme1_home_screen.dart';
-import 'package:sixam_mart/view/screens/home/web_home_screen.dart';
-import 'package:sixam_mart/view/screens/home/widget/filter_view.dart';
-import 'package:sixam_mart/view/screens/home/widget/popular_item_view.dart';
-import 'package:sixam_mart/view/screens/home/widget/item_campaign_view.dart';
-import 'package:sixam_mart/view/screens/home/widget/popular_store_view.dart';
-import 'package:sixam_mart/view/screens/home/widget/banner_view.dart';
-import 'package:sixam_mart/view/screens/home/widget/category_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart/view/screens/home/widget/module_view.dart';
+import 'package:sixam_mart/view/screens/home/widget/popular_item_view.dart';
+import 'package:sixam_mart/view/screens/home/widget/popular_store_view.dart';
 import 'package:sixam_mart/view/screens/parcel/parcel_category_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
 
 
+import '../../../../helper/route_helper.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/images.dart';
+import '../../../../util/styles.dart';
+import '../../../base/item_view.dart';
+import '../../../base/paginated_list_view.dart';
+import '../theme1/theme1_home_screen.dart';
+import '../web_home_screen.dart';
+import 'banner_view.dart';
+import 'category_view.dart';
+import 'filter_view.dart';
+import 'item_campaign_view.dart';
+import 'module_view.dart';
+
+class FoodScreen extends StatefulWidget {
+  const FoodScreen({Key? key,}) : super(key: key);
+
+
+
+
+ 
   static Future<void> loadData(bool reload) async {
     if(Get.find<SplashController>().module != null && !Get.find<SplashController>().configModel!.moduleConfig!.module!.isParcel!) {
       Get.find<LocationController>().syncZoneData();
@@ -65,17 +73,23 @@ class HomeScreen extends StatefulWidget {
   }
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<FoodScreen> createState() => _FoodScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _FoodScreenState extends State<FoodScreen> {
   final ScrollController _scrollController = ScrollController();
+  SplashController  splashController2 = Get.find<SplashController>();
 
-  @override
+
+ 
+   @override
   void initState() {
     super.initState();
+// splashController.removeModule(),
+    splashController2.removeModule();
+    splashController2.switchModuleFoodScreen(2, true);
 
-    HomeScreen.loadData(false);
+    FoodScreen.loadData(false);
     if(!ResponsiveHelper.isWeb()) {
       Get.find<LocationController>().getZone(
           Get.find<LocationController>().getUserAddress()!.latitude,
@@ -90,10 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _scrollController.dispose();
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SplashController>(builder: (splashController) {
+      // set the module to shop
+      // splashController.switchModule(2, true);
+
       bool showMobileModule = !ResponsiveHelper.isDesktop(context) && splashController.module == null && splashController.configModel!.module == null;
       bool isParcel = splashController.module != null && splashController.configModel!.moduleConfig!.module!.isParcel!;
       // bool isTaxiBooking = splashController.module != null && splashController.configModel!.moduleConfig!.module!.isTaxi!;
@@ -283,7 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     ]
                     )
-                   : ModuleView(splashController: splashController),
+                   : SizedBox()
+                    // ModuleView(splashController: splashController),
                   )),
                 ),
               ],

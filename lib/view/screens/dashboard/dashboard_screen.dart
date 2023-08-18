@@ -21,6 +21,11 @@ import 'package:sixam_mart/view/screens/order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../home/widget/food.dart';
+import '../home/widget/module_view.dart';
+import '../home/widget/sendScreem.dart';
+import '../home/widget/shops.dart';
+import '../parcel/parcel_category_screen.dart';
 import 'widget/running_order_view_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -72,14 +77,21 @@ class DashboardScreenState extends State<DashboardScreen> {
     _pageIndex = widget.pageIndex;
 
     _pageController = PageController(initialPage: widget.pageIndex);
-
+    //  SplashController splashController = Get.find<SplashController>();
     _screens = [
       const HomeScreen(),
-      const FavouriteScreen(),
-      // const CartScreen(fromNav: true),
-      const SizedBox(),
-      const OrderScreen(),
+      const ShopsScreen(),
+      const FoodScreen(),
+       
+      const SendScreen(),
       const MenuScreenNew()
+
+      // needed for later
+      // const CartScreen(fromNav: true),
+      // const OrderScreen(), 
+      // ModuleView(splashController: splashController),
+       // const FavouriteScreen(),
+       //// const ParcelCategoryScreen(),
     ];
 
     Future.delayed(const Duration(seconds: 1), () {
@@ -146,38 +158,47 @@ class DashboardScreenState extends State<DashboardScreen> {
 
             // endDrawer: const MenuScreenNew(),
 
-            floatingActionButton: ResponsiveHelper.isDesktop(context) ? null : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? null
-                : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty)
-                ? const SizedBox() : FloatingActionButton(
-                  elevation: 5,
-                  backgroundColor: _pageIndex == 2 ? Theme.of(context).primaryColor : Theme.of(context).cardColor,
-                  onPressed: () {
-                      // _setPage(2);
-                    Get.toNamed(RouteHelper.getCartRoute());
-                  },
-                  child: CartWidget(color: _pageIndex == 2 ? Theme.of(context).cardColor : Theme.of(context).disabledColor, size: 30),
-                ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+// export the cart button to the bottom app bar
 
-            bottomNavigationBar: ResponsiveHelper.isDesktop(context) ? const SizedBox() : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? const SizedBox()
-                : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty) ? const SizedBox() :  BottomAppBar(
+            // floatingActionButton: ResponsiveHelper.isDesktop(context) ? null : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? null
+            //     : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty)
+            //     ? const SizedBox() : 
+                
+                
+            //     FloatingActionButton(
+            //       elevation: 5,
+            //       backgroundColor: _pageIndex == 2 ? Theme.of(context).primaryColor : Theme.of(context).cardColor,
+            //       onPressed: () {
+            //           // _setPage(2);
+            //         Get.toNamed(RouteHelper.getCartRoute());
+            //       },
+            //       child: CartWidget(color: _pageIndex == 2 ? Theme.of(context).cardColor : Theme.of(context).disabledColor, size: 30),
+            //     ),
+            // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+            bottomNavigationBar: ResponsiveHelper.isDesktop(context) ? 
+              const SizedBox() : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? const SizedBox()
+                : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty) ? 
+                const SizedBox() :  
+                BottomAppBar(
                   elevation: 5,
-                  notchMargin: 5,
+                  // notchMargin: 5,
                   clipBehavior: Clip.antiAlias,
                   shape: const CircularNotchedRectangle(),
 
                   child: Padding(
                     padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                    child: Row(children: [
-                      BottomNavItem(iconData: Icons.home, isSelected: _pageIndex == 0, onTap: () => _setPage(0)),
-                      BottomNavItem(iconData: Icons.favorite, isSelected: _pageIndex == 1, onTap: () => _setPage(1)),
-                      const Expanded(child: SizedBox()),
-                      BottomNavItem(iconData: Icons.shopping_bag, isSelected: _pageIndex == 3, onTap: () => _setPage(3)),
-                      BottomNavItem(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () => _setPage(4)),
-                      // BottomNavItem(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () => _openEndDrawer()),
-                      // BottomNavItem(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () {
-                      //   Get.bottomSheet(const MenuScreen(), backgroundColor: Colors.transparent, isScrollControlled: true);
-                      // }),
+                    child: Row(
+                      children: [
+                        BottomNavItem(iconData: Icons.home,title: "Today", isSelected: _pageIndex == 0, onTap: () => _setPage(0)),
+                        BottomNavItem(iconData: Icons.shopping_bag,title: "Shops", isSelected: _pageIndex == 1, onTap: () => _setPage(1)),
+                        BottomNavItem(iconData: Icons.food_bank,title: "Food", isSelected: _pageIndex == 2, onTap: () => _setPage(2)),
+                        BottomNavItem(iconData: Icons.electric_bike, title: "Send", isSelected: _pageIndex == 3, onTap: () => _setPage(3)),
+                        BottomNavItem(iconData: Icons.hub,title: "Hub", isSelected: _pageIndex == 4, onTap: () => _setPage(4)),
+                        // BottomNavItem(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () => _openEndDrawer()),
+                        // BottomNavItem(iconData: Icons.menu, isSelected: _pageIndex == 4, onTap: () {
+                        //   Get.bottomSheet(const MenuScreen(), backgroundColor: Colors.transparent, isScrollControlled: true);
+                        // }),
                     ]),
                   ),
                 ),
@@ -240,6 +261,35 @@ class DashboardScreenState extends State<DashboardScreen> {
   Widget trackView(BuildContext context, {required bool status}) {
     return Container(height: 3, decoration: BoxDecoration(color: status ? Theme.of(context).primaryColor
         : Theme.of(context).disabledColor.withOpacity(0.5), borderRadius: BorderRadius.circular(Dimensions.radiusDefault)));
+  }
+
+
+
+
+  
+  Widget sideMenu(BuildContext context) {
+    return   Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                  child: Container(
+                    color: Colors.green,
+                    padding: const EdgeInsets.all(3.0),
+                    child: Column(
+                      children: [
+                        BottomNavItem(iconData: Icons.favorite, isSelected: _pageIndex == 1, onTap: () => _setPage(1)),
+                        const SizedBox(height: 3.0),
+                        BottomNavItem(iconData: Icons.shopping_cart, isSelected: _pageIndex == 2, onTap: () => _setPage(2)),
+                        const SizedBox(height: 3.0),
+                        BottomNavItem(iconData: Icons.assignment, isSelected: _pageIndex == 3, onTap: () => _setPage(3)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+          );
   }
 }
 

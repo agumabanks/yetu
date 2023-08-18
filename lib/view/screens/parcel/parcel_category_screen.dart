@@ -27,6 +27,11 @@ class _ParcelCategoryScreenState extends State<ParcelCategoryScreen> {
   @override
   void initState() {
     super.initState();
+      // bool showMobileModule = !ResponsiveHelper.isDesktop(context) && splashController.module == null && splashController.configModel!.module == null;
+        SplashController splashController = Get.find<SplashController>();
+
+      // bool isParcel = splashController.module != null ;
+      // splashController.switchModule(1, true);
 
     if(Get.find<AuthController>().isLoggedIn() && Get.find<UserController>().userInfoModel == null) {
       Get.find<UserController>().getUserInfo();

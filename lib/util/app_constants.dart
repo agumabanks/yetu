@@ -4,7 +4,7 @@ import 'package:sixam_mart/data/model/response/language_model.dart';
 import 'package:sixam_mart/util/images.dart';
 
 class AppConstants {
-  static const String appName = '6amMart';
+  static const String appName = 'YETU';
   static const double appVersion = 2.2;
 
   static const String fontFamily = 'Roboto';

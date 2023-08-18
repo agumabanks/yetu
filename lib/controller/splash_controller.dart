@@ -16,6 +16,10 @@ import 'package:sixam_mart/util/html_type.dart';
 import 'package:sixam_mart/view/base/custom_snackbar.dart';
 import 'package:sixam_mart/view/screens/home/home_screen.dart';
 
+import '../view/screens/home/widget/food.dart';
+import '../view/screens/home/widget/sendScreem.dart';
+import '../view/screens/home/widget/shops.dart';
+
 class SplashController extends GetxController implements GetxService {
   final SplashRepo splashRepo;
   SplashController({required this.splashRepo});
@@ -131,9 +135,9 @@ class SplashController extends GetxController implements GetxService {
     if(Get.find<AuthController>().isLoggedIn()) {
       Get.find<WishListController>().getWishList();
     }
-    if(notify) {
-      update();
-    }
+    // if(notify) {
+    //   update();
+    // }
   }
 
   Module getModuleConfig(String? moduleType) {
@@ -163,6 +167,44 @@ class SplashController extends GetxController implements GetxService {
         await Get.find<SplashController>().setModule(_moduleList![index]);
         Get.find<CartController>().getCartData();
         HomeScreen.loadData(true);
+        ShopsScreen.loadData(true);
+        FoodScreen.loadData(true);
+        SendScreen.loadData(true);
+    }
+  }
+
+   void switchModuleShopsScreen(int index, bool fromPhone) async {
+    if(_module == null || _module!.id != _moduleList![index].id) {
+        await Get.find<SplashController>().setModule(_moduleList![index]);
+        Get.find<CartController>().getCartData();
+        // HomeScreen.loadData(true);
+        ShopsScreen.loadData(true);
+        // FoodScreen.loadData(true);
+        // SendScreen.loadData(true);
+    }
+  }
+
+  // switchModuleSendsScreen
+  void switchModuleSendsScreen(int index, bool fromPhone) async {
+    if(_module == null || _module!.id != _moduleList![index].id) {
+        await Get.find<SplashController>().setModule(_moduleList![index]);
+        Get.find<CartController>().getCartData();
+        // HomeScreen.loadData(true);
+        // ShopsScreen.loadData(true);
+        // FoodScreen.loadData(true);
+        SendScreen.loadData(true);
+    }
+  }
+
+  // switchModuleFoodScreen
+   void switchModuleFoodScreen(int index, bool fromPhone) async {
+    if(_module == null || _module!.id != _moduleList![index].id) {
+        await Get.find<SplashController>().setModule(_moduleList![index]);
+        Get.find<CartController>().getCartData();
+        // HomeScreen.loadData(true);
+        // ShopsScreen.loadData(true);
+        FoodScreen.loadData(true);
+        // SendScreen.loadData(true);
     }
   }
 

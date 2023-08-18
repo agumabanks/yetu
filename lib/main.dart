@@ -59,7 +59,7 @@ Future<void> main() async {
 
   if (ResponsiveHelper.isWeb()) {
     await FacebookAuth.instance.webAndDesktopInitialize(
-      appId: "380903914182154",
+      appId: "380903914182159J4",
       cookie: true,
       xfbml: true,
       version: "v15.0",
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     _route();
   }
 
-  void _route() async {
+  void _route() async { 
     if(GetPlatform.isWeb) {
       await Get.find<SplashController>().initSharedData();
       if(Get.find<LocationController>().getUserAddress() != null && Get.find<LocationController>().getUserAddress()!.zoneIds == null) {
