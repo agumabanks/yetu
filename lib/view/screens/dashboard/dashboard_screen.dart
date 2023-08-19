@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../home/widget/food.dart';
+import '../home/widget/mainScreen.dart';
 import '../home/widget/module_view.dart';
 import '../home/widget/sendScreem.dart';
 import '../home/widget/shops.dart';
@@ -79,7 +80,8 @@ class DashboardScreenState extends State<DashboardScreen> {
     _pageController = PageController(initialPage: widget.pageIndex);
     //  SplashController splashController = Get.find<SplashController>();
     _screens = [
-      const HomeScreen(),
+      // const HomeScreen(),
+      MainScreen(),
       const ShopsScreen(),
       const FoodScreen(),
        
