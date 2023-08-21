@@ -36,10 +36,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if(GetPlatform.isWeb){
     await Firebase.initializeApp(options: const FirebaseOptions(
-      apiKey: 'AIzaSyDFN-73p8zKVZbA0i5DtO215XzAb-xuGSE',
-      appId: '1:1000163153346:web:4f702a4b5adbd5c906b25b',
-      messagingSenderId: 'G-L1GNL2YV61',
-      projectId: 'ammart-8885e',
+      apiKey: 'AIzaSyAwR1wxsVJbgWJl67DrggYhdD8zJsHKDf8',
+      appId: '1:268039391901:web:fe249cde581d3da9166274',
+      messagingSenderId: '268039391901',
+      projectId: 'soko-86bf0',
     ));
   }
   await Firebase.initializeApp();
